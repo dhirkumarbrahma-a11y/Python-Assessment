@@ -1,0 +1,65 @@
+SECTION A: CONCEPT APPLICATION 
+
+1. STRING METHODS AND EXECUTION ORDER
+
+To remove extra spaces and fix inconsistent casing in a product name string, the required methods and their execution order are:
+
+  1. .strip(): Removes leading and trailing whitespace characters.
+  2. .title() (or .lower() / .upper()): Standardizes character casing across all text entries.
+
+Execution Example:
+
+clean_product_name = raw_product_name.strip().title()
+
+
+2. MANUAL CSV LOADING AND DATA TYPE CONVERSION
+
+- Why manual CSV loading treats numeric columns as strings:
+  CSV (Comma-Separated Values) files store data as plain text. When reading line-by-line using standard file operations or string splitting, Python treats all extracted tokens as string primitives by default.
+
+- Function used to convert string numeric values to floating-point numbers:
+  The built-in float() function (e.g., sales_val = float(sales_str)).
+
+
+3. DATA STRUCTURE SELECTION: DICTIONARY VS. LIST
+
+- Best Data Structure:
+  A Dictionary (dict). It maps unique product names as keys to their cumulative sales sums as values.
+
+- Drawbacks of using a List:
+  1. A list requires storing tuples/pairs or maintaining two parallel lists, making lookup inefficient.
+  2. Searching or updating a specific product in a list requires a linear scan O(n) time complexity, whereas a dictionary allows constant time O(1) key lookups and updates.
+
+
+4. FOR LOOP VS. SUM() FUNCTION
+
+- sum() function: Ideal for simple, clean numeric iterables (e.g., sum(sales_list)).
+- When a For Loop is the only viable option:
+  A for loop is necessary when raw data requires inline cleaning, string stripping (e.g., removing '$' or ','), handling missing values (None/NaN), or wrapped try-except blocks for type error handling prior to summation.
+
+
+5. TYPE CHECKING AND ERROR HANDLING FOR TYPEERROR
+
+To prevent a TypeError when comparing a potential string variable to a number:
+  1. Use try-except error handling to attempt type-casting before comparison:
+     try:
+         num_val = float(val)
+         if num_val > 100000:
+             print("High Revenue")
+     except (ValueError, TypeError):
+         print("Invalid data type, skipping comparison.")
+
+  2. Use isinstance(val, (int, float)) for strict type validation.
+
+
+6. BENEFITS OF MODULARIZATION VS. RISKS OF SINGLE LARGE CODE BLOCKS
+
+- Benefits of Modularizing:
+  1. Reusability: Functions can be reused across different pipelines or datasets.
+  2. Maintainability & Testability: Code can be tested and debugged in isolated units.
+  3. Readability: Logic is clean and logically partitioned.
+
+- Risks of Single Large Code Blocks:
+  1. Hard to debug: Variable scope pollution and execution dependencies make tracing bugs difficult.
+  2. Code Duplication: Leads to redundant and brittle codebases.
+
